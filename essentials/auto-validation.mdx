@@ -1,0 +1,26 @@
+---
+title: 'Auto Validation'
+icon: 'wand-magic-sparkles'
+---
+
+## How Auto Validation Works
+
+The auto-validation feature allows the AI Fraud Detector to automatically validate entities without the need for human intervention. This feature is useful when you have a high volume of entities to validate and you want to speed up the process.
+
+When the auto-validation feature is enabled, the AI Fraud Detector will automatically validate the entities if the reliability percentage is above a certain threshold. The threshold is set in the organization settings page.
+
+An auto-validated entity will have a validation status of `AUTO_VALIDATED` will be send to the webhook with the `AUTO_RESPONSE` type.
+<div className="flex items-center">
+  <p className="mr-1">In the entities page, the auto validated entities have these icon</p>
+  <img className="hidden h-6 dark:block" src="/images/auto-validation-light.svg"/>
+  <img className="block h-6 dark:hidden" src="/images/auto-validation-dark.svg"/>
+</div>
+<Warning>It will validate only the new entities that are inserted into the system. The entities that are already validated or that are awaiting validation will not be auto-validated.</Warning>
+<Info>It's possible that, to streamline the process, only one validation call is made for each entity; in this case, reliability is always at 100%. Contact us to find out how reliability varies based on the calls we are making.</Info>
+## How to Enable Auto Validation
+
+From the organization page, you can enable or disable self-validation and set the reliability threshold above which entities will be auto-validated.
+
+Auto-validation is divided into entities considered fraudulent and entities considered legitimate, allowing you to enable auto-validation for only one of the two cases and also to set different reliability levels.
+<Note>You may consider enabling auto-validation only for legitimate entities, so that human intervention is required only for products considered fraudulent.</Note>
+![Organization Settings](/images/auto-validation-settings.png)

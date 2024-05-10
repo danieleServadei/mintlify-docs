@@ -1,0 +1,45 @@
+---
+title: 'Webhooks'
+icon: 'link'
+---
+
+## How it works
+
+The webhook is a URL that you can set in the organization settings page.
+
+This URL will be called at most once every 5 seconds.  It triggers when there are elements that have not been sent yet, and their validation status has changed, with the last validation update occurring at least 5 minutes ago.
+
+The webhook call will send a POST request with the result of the validation of the entities. The result will contain the motivation of the AI decision, the reliability of the AI decision, the validation of the user, and the type of the validation.
+
+The list of webhook calls with their statuses is visible on the webhook page.
+
+## How to implement
+
+To implement the webhook, you need to create an endpoint in your server that listens to the POST request on the URL you set in the organization settings page. 
+
+The endpoint should respond with a 200 status.
+
+## Payload
+The webhook call send a POST request with the following body:
+
+```json
+[
+  {
+    "entityId": "string",
+    "motion": "string" , //the motivation of the AI decision
+    "isFraud": "boolean", //true if the entity is fraud, false otherwise
+    "reliability": "number", //the reliability of the AI decision
+    "approved": "boolean", //true if the validation approved the AI decision, false otherwise 
+    "type": "string" //AUTO_RESPONSE if it's an auto validation, MANUAL_RESPONSE if it's a user validation
+  }
+]
+```
+<Note>The array will contain a minimum of one element and a maximum of 20 elements.</Note>
+
+<Warning>You need to be careful to check the value of `approved` because the sole value of `isFraud` isn't sufficient. There might be a call where `isFraud` is true, but it hasn't been actually approved, so it shouldn't be considered as fraud.</Warning>
+
+## Error handling
+
+If the webhook call fails, the system will retry the call up to 7 times. These 7 attempts will be exponentially spaced over time, and after these attempts, the system will cease further attempts to call the webhook for those entities.
+
+From the webhooks page, you can force the webhook call for entities that are in error and restart the process if an entity has failed all 7 calls.

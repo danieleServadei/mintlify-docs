@@ -1,0 +1,20 @@
+---
+title: "Entities"
+icon: "object-group"
+---
+
+## Entities
+
+The entity is the foundation of the application and represents any item uploaded ready to be evaluated by AI. It has its fundamental characteristics, which are:
+
+- ID (internal to the application)
+- ID assigned by the organization
+- Title
+- Description
+- Extra Info
+
+Thanks to these characteristics, the application can process the product through interaction with AI, receiving in response the possibility or impossibility of fraud.
+
+To be added, an entity must be sent through an [API call](/api-reference/endpoint/insert-product.mdx).
+
+The validation of the product performed by AI can be confirmed or rejected by an Organization user or be [auto-validated](/essentials/auto-validation) (if this option is activated).
